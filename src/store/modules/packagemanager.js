@@ -20,6 +20,9 @@ const mutations = {
     },
     DELETE_PACKAGE: () => {
         console.log('Item Deleted')
+    },
+    UPDATE_PACKAGE: () => {
+
     }
 }
 
@@ -46,16 +49,14 @@ const actions = {
         context.commit('RETRIEVE_PACKAGES', tempPackages);
     },
 
-    addPackage: (context, payload) => {
-        let tempPackage = payload;
-        tempPackage.timestamp = Date.now();
+    addPackage: (context, payload) => {        
         db.collection('users/AbZboHaasVdgbxbPp6aQ/packages').add({
-            item: tempPackage.item,
-            description: tempPackage.description,
-            tracking_number: tempPackage.trackingnumber,
-            carrier: tempPackage.carrier,
-            timestamp: tempPackage.timestamp,
-            inbound: tempPackage.inbound
+            item: payload.item,
+            description: payload.description,
+            tracking_number: payload.trackingnumber,
+            carrier: payload.carrier,
+            timestamp: Date.now(),
+            inbound: payload.inbound
         })
             .then(() => {
                 context.commit('ADD_PACKAGE');
