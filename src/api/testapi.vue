@@ -2,7 +2,7 @@
   <div>
     <div>
       <h3>add packages</h3>
-      <div>        
+      <div>
         <input
           v-model="addPackageData.item"
           class="validate"
@@ -17,14 +17,13 @@
           v-model="addPackageData.trackingnumber"
           class="validate"
           placeholder="tracking"
-        />                
-      </div>      
-    </div>
-    <div>
-          <button @click="addPackage()">
-              add
-          </button>
+        />
       </div>
+       <div>
+          <button @click="addPackage()">add</button>
+        </div>
+    </div>
+
     <div>
       <h1>packages</h1>
       <div v-for="item in packages" v-bind:key="item.id" class="collection">
@@ -36,6 +35,9 @@
           <div>{{ item.carrier }}</div>
           <div>{{ item.timestamp }}</div>
           <div>{{ item.inbound }}</div>
+        </div>
+        <div>
+          <button @click="deletePackage(item)">delete</button>
         </div>
       </div>
     </div>
@@ -55,7 +57,7 @@ export default {
   name: "EmployeeList",
   data() {
     return {
-      addPackageData: {        
+      addPackageData: {
         item: "",
         description: "",
         trackingnumber: "",
@@ -69,11 +71,15 @@ export default {
   },
   methods: {
     ...mapActions({
-        addItem: 'addPackage'
+      addItem: "addPackage",
+      deleteItem: "deletePackage",
     }),
     addPackage() {
-        this.addItem(this.addPackageData)
-    }
+      this.addItem(this.addPackageData);
+    },
+    deletePackage(item) {
+      this.deleteItem(item);
+    },
   },
   created() {
     this.$store.dispatch("retrievePackages");
