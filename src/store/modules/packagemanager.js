@@ -5,7 +5,7 @@ const state = {
 }
 
 const getters = {
-    packages() {        
+    packages() {
         return state.packages
     }
 }
@@ -14,7 +14,7 @@ const mutations = {
     RETRIEVE_PACKAGES: (state, payload) => {
         state.packages = payload;
     },
-    
+
     ADD_PACKAGE: () => {
         console.log('Item Added')
     },
@@ -23,13 +23,13 @@ const mutations = {
     }
 }
 
-const actions = {    
+const actions = {
     //TODO: Replace hardcoded user to logged in user - ${userId}
     //retrieve entire list of active packages for specific user.    
-    retrievePackages: (context) => {                
+    retrievePackages: (context) => {
         let tempPackages = []
-        db.collection('users/AbZboHaasVdgbxbPp6aQ/packages').get()                        
-            .then(querySnapshot => {                
+        db.collection('users/AbZboHaasVdgbxbPp6aQ/packages').get()
+            .then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const data = {
                         id: doc.id,
@@ -39,14 +39,14 @@ const actions = {
                         carrier: doc.data().carrier,
                         timestamp: doc.data().timestamp,
                         inbound: doc.data().inbound
-                    }                    
-                    tempPackages.push(data);                    
-                })                                
+                    }
+                    tempPackages.push(data);
+                })
             })
-            context.commit('RETRIEVE_PACKAGES', tempPackages);
-    },    
+        context.commit('RETRIEVE_PACKAGES', tempPackages);
+    },
 
-    addPackage: (context, payload) => {        
+    addPackage: (context, payload) => {
         let tempPackage = payload;
         tempPackage.timestamp = Date.now();
         db.collection('users/AbZboHaasVdgbxbPp6aQ/packages').add({
@@ -57,28 +57,47 @@ const actions = {
             timestamp: tempPackage.timestamp,
             inbound: tempPackage.inbound
         })
-        .catch((error) => {
-            console.log('Error adding document ', error);
-        })
-        .then(() => {
-            context.commit('ADD_PACKAGE');
-            context.dispatch('retrievePackages');                       
-        });         
+            .then(() => {
+                context.commit('ADD_PACKAGE');
+                context.dispatch('retrievePackages');
+            })
+            .catch((error) => {
+                console.log('Error adding document ', error);
+            });
     },
 
     deletePackage: (context, payload) => {
-        console.log(payload.id);
         db.collection('users/AbZboHaasVdgbxbPp6aQ/packages')
             .doc(payload.id)
             .delete()
-            .catch((error) => {
-                console.log('Error Deleting document', error);
-            })
             .then(() => {
                 context.commit('DELETE_PACKAGE');
-                context.dispatch('retrievePackages');                
+                context.dispatch('retrievePackages');
+            })
+            .catch((error) => {
+                console.log('Error Deleting document', error);
             });
-                    
+
+    },
+
+    updatePackage: (context, payload) => {
+        db.collection('users/AbZboHaasVdgbxbPp6aQ/packages')
+            .doc(payload.id)
+            .set({
+                item: payload.item,
+                description: payload.description,
+                tracking_number: payload.trackingnumber,
+                carrier: payload.carrier,
+                timestamp: Date.now(),
+                inbound: payload.inbound
+            })
+            .then(() => {
+                context.commit('UPDATE_PACKAGE');
+                context.dispatch('retrievePackage');
+            })
+            .catch((error) => {
+                console.log('Error Updating document', error);
+            })
     }
 }
 
