@@ -1,11 +1,11 @@
-import db from '@/db'
+import { db } from '@/db'
 
 const state = {
     packages: []
 }
 
 const getters = {
-    packages() {
+    packages:() => {
         return state.packages
     }
 }

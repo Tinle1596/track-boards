@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import packagemanager from './modules/packagemanager'
+import authentication from './modules/authentication'
 
 Vue.use(Vuex);
 
@@ -8,7 +9,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    packagemanager
+    packagemanager,
+    authentication
   },
   strict: false
 });

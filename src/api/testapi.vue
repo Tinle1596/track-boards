@@ -67,12 +67,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["packages"]),
+    ...mapGetters(['packages']),
   },
   methods: {
     ...mapActions({
-      addItem: "addPackage",
-      deleteItem: "deletePackage",
+      addItem: 'addPackage',
+      deleteItem: 'deletePackage',
     }),
     addPackage() {
       this.addItem(this.addPackageData);
