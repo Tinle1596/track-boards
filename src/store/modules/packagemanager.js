@@ -5,12 +5,13 @@ const state = {
 }
 
 const getters = {
-    packages:() => {
+    packages: () => {
         return state.packages
     }
 }
 
 const mutations = {
+
     RETRIEVE_PACKAGES: (state, payload) => {
         state.packages = payload;
     },
@@ -28,10 +29,13 @@ const mutations = {
 
 const actions = {
     //TODO: Replace hardcoded user to logged in user - ${userId}
-    //retrieve entire list of active packages for specific user.    
+    //retrieve entire list of active packages for specific user.
     retrievePackages: (context) => {
         let tempPackages = []
-        db.collection('users/AbZboHaasVdgbxbPp6aQ/packages').get()
+        let collectionPath = 'users/${userId}/packages';
+        collectionPath = collectionPath.replace('${userId}', context.rootState.authentication.user.uid) //collection path
+
+        db.collection(collectionPath).get()
             .then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const data = {
@@ -49,8 +53,10 @@ const actions = {
         context.commit('RETRIEVE_PACKAGES', tempPackages);
     },
 
-    addPackage: (context, payload) => {        
-        db.collection('users/AbZboHaasVdgbxbPp6aQ/packages').add({
+    addPackage: (context, payload) => {
+        let collectionPath = 'users/${userId}/packages';
+        collectionPath = collectionPath.replace('${userId}', context.rootState.authentication.user.uid) //collection path
+        db.collection(collectionPath).add({
             item: payload.item,
             description: payload.description,
             tracking_number: payload.trackingnumber,
@@ -68,7 +74,9 @@ const actions = {
     },
 
     deletePackage: (context, payload) => {
-        db.collection('users/AbZboHaasVdgbxbPp6aQ/packages')
+        let collectionPath = 'users/${userId}/packages';
+        collectionPath = collectionPath.replace('${userId}', context.rootState.authentication.user.uid) //collection path
+        db.collection(collectionPath)
             .doc(payload.id)
             .delete()
             .then(() => {
@@ -82,7 +90,9 @@ const actions = {
     },
 
     updatePackage: (context, payload) => {
-        db.collection('users/AbZboHaasVdgbxbPp6aQ/packages')
+        let collectionPath = 'users/${userId}/packages';
+        collectionPath = collectionPath.replace('${userId}', context.rootState.authentication.user.uid) //collection path
+        db.collection(collectionPath)
             .doc(payload.id)
             .set({
                 item: payload.item,

@@ -18,10 +18,8 @@
       <br>
       <button @click="signUp()">Sign Up</button>
       </p>
-      <br>
-      <div>
-          {{ userInfo }}
-      </div>
+      {{ userInfo }}
+      <br>      
   </div>
 </template>
 
@@ -46,7 +44,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            userInfo: 'getUserInfo'
+            userInfo: 'getUserInfo'            
         })
     },
     methods: {
