@@ -47,12 +47,6 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 
-// import axios from "axios";
-// import VueAxios from "vue-axios";
-// import db from "@/db";
-
-//Vue.use(VueAxios, axios);
-
 export default {
   name: "EmployeeList",
   data() {
@@ -84,13 +78,6 @@ export default {
   created() {
     this.$store.dispatch("retrievePackages");
   },
-  // mounted(){
-  //     Vue.axios.get('http://dummy.restapiexample.com/api/v1/employees')
-  //         .then((resp) => {
-  //             this.list=resp.data.data;
-  //             console.warn(resp)
-  //         })
-  // }
 };
 </script>
 

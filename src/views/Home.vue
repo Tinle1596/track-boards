@@ -6,7 +6,7 @@
 
 <script>
 // @ is an alias to /src
-import EmployeeList from '@/api/testapi.vue';
+import EmployeeList from '@/components/testpackagemanager.vue';
 
 export default {
   name: "Home",
