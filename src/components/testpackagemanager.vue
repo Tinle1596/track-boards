@@ -39,6 +39,9 @@
         <div>
           <button @click="deletePackage(item)">delete</button>
         </div>
+        <div>
+          <button @click="getDetails(item)">track package</button>
+        </div>
       </div>
     </div>
   </div>
@@ -67,6 +70,7 @@ export default {
     ...mapActions({
       addItem: 'addPackage',
       deleteItem: 'deletePackage',
+      getTrackingDetails: 'getTrackingDetailForUSPS'      
     }),
     addPackage() {
       this.addItem(this.addPackageData);
@@ -74,6 +78,9 @@ export default {
     deletePackage(item) {
       this.deleteItem(item);
     },
+    getDetails(item) {
+      this.getTrackingDetails(item);
+    }
   },
   created() {
     this.$store.dispatch("retrievePackages");
