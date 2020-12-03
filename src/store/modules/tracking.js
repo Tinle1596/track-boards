@@ -1,5 +1,4 @@
 import axios from 'axios'
-//const shippo = require('shippo')('shippo_live_5580d8e348403c0eab5117e2c85e30b20f35aee7');
 
 const state = {
 
@@ -24,23 +23,24 @@ const actions = {
     //Tracking detail for USPS
     //TODO: replace hardcoded tracking number w/ actual tracking number
     getTrackingDetailForUSPS:(context, payload) => {
-        // console.log(payload.trackingnumber);
-        // let request = 'https://api.goshippo.com/tracks/usps/${tracking}';
-        // request = request.replace('${tracking}', payload.trackingnumber);
-        // console.log(request);
-        // var res = shippo.tracks.get(request)
-        // console.log(res);
 
-        let metadata = 'carrier=usps&tracking_number=${tracking}'
-        metadata = metadata.replace('${tracking}', payload.trackingnumber)        
-        axios.get('https://api.goshippo.com/tracks/', {
-            method:'GET',
-            headers: {
-                'Authorization': 'ShippoToken shippo_live_5580d8e348403c0eab5117e2c85e30b20f35aee7',                
-            },
-            body: metadata
-        })
-            .then(res => res.json())
+        //Create dictionary
+        let carriers = {
+            1: 'usps',
+            2: 'ups',
+            3: 'fedex',
+            4: 'ontrac',
+            5: 'dhl',
+            6: 'amazon'
+        };
+        let packageCarrier = carriers[payload.carrier];        
+        let request = 'http://shipit-api.herokuapp.com/api/carriers/${carrier}/${trackingnumber}';
+
+        request = request.replace('${carrier}', packageCarrier)
+        request = request.replace('${trackingnumber}', payload.trackingnumber);
+        console.log(request);
+
+        axios.get(request)
             .then(response => {
                 console.log(response);
                 context.commit('UPDATE_PACKAGE_DETAILS');
