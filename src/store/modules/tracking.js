@@ -1,64 +1,39 @@
 import axios from 'axios'
 
 const state = {
-
+    currentPackageDetails: {}
 }
 
 const getters = {
-
+    getCurrentPackageDetails:() => {
+        return state.currentPackageDetails;
+    }
 }
 
 const mutations = {
-    UPDATE_PACKAGE_DETAILS() {
-        alert('Successful api request');
+    UPDATE_PACKAGE_DETAILS:(state, payload) => {                
+        state.currentPackageDetails = payload.data;    
     }
 }
 
 const actions = {
-
-    //Determine which carrier to track 
-    // getTrackingDetails:(context, payload) => {
-
-    // },
-    //Tracking detail for USPS
-    //TODO: replace hardcoded tracking number w/ actual tracking number
-    getTrackingDetailForUSPS:(context, payload) => {
-
-        //Create dictionary
-        let carriers = {
-            1: 'usps',
-            2: 'ups',
-            3: 'fedex',
-            4: 'ontrac',
-            5: 'dhl',
-            6: 'amazon'
-        };
-        let packageCarrier = carriers[payload.carrier];        
+    //TODO: update all 
+    getTrackingDetail:(context, payload) => {
         let request = 'http://shipit-api.herokuapp.com/api/carriers/${carrier}/${trackingnumber}';
 
-        request = request.replace('${carrier}', packageCarrier)
+        request = request.replace('${carrier}', payload.carrier);
         request = request.replace('${trackingnumber}', payload.trackingnumber);
-        console.log(request);
 
+        //wait to get request before updating data
         axios.get(request)
-            .then(response => {
-                console.log(response);
-                context.commit('UPDATE_PACKAGE_DETAILS');
+            .then(response => {  
+                console.log(response)             
+                context.commit('UPDATE_PACKAGE_DETAILS', response);
             })
-            err => {
-                console.log(err);
-            }
+        err => {
+            alert(err);
+        }
     },
-
-    // //Tracking for UPS
-    // async GetTrackingDetailForUPS({}){
-
-    // },
-
-    // //Tracking for FedEx
-    // async GetTrackingDetailForFedEx() {
-
-    // }
 }
 
 export default {

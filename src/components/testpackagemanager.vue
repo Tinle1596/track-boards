@@ -41,7 +41,11 @@
         </div>
         <div>
           <button @click="getDetails(item)">track package</button>
-        </div>
+        </div>      
+      </div>
+      <div>
+        <h1>trackingdetails</h1>
+        <div>{{ currentPackageDetails }}</div>
       </div>
     </div>
   </div>
@@ -64,13 +68,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['packages']),
+    ...mapGetters({
+      packages: 'getPackages',
+      currentPackageDetails: 'getCurrentPackageDetails'
+    }),
   },
   methods: {
     ...mapActions({
       addItem: 'addPackage',
       deleteItem: 'deletePackage',
-      getTrackingDetails: 'getTrackingDetailForUSPS'      
+      getTrackingDetails: 'getTrackingDetail'      
     }),
     addPackage() {
       this.addItem(this.addPackageData);

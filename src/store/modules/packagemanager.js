@@ -5,7 +5,7 @@ const state = {
 }
 
 const getters = {
-    packages: () => {
+    getPackages: () => {
         return state.packages
     }
 }
@@ -27,9 +27,7 @@ const mutations = {
     }
 }
 
-const actions = {
-    //TODO: Replace hardcoded user to logged in user - ${userId}
-    //retrieve entire list of active packages for specific user.
+const actions = {    
     retrievePackages: (context) => {
         let tempPackages = []
         let collectionPath = 'users/${userId}/packages';
