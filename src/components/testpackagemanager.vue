@@ -19,9 +19,9 @@
           placeholder="tracking"
         />
       </div>
-       <div>
-          <button @click="addPackage()">add</button>
-        </div>
+      <div>
+        <button @click="addPackage()">add</button>
+      </div>
     </div>
 
     <div>
@@ -41,7 +41,7 @@
         </div>
         <div>
           <button @click="getDetails(item)">track package</button>
-        </div>      
+        </div>
       </div>
       <div>
         <h1>trackingdetails</h1>
@@ -63,21 +63,21 @@ export default {
         description: "",
         trackingnumber: "",
         carrier: 1,
-        inbound: true,
-      },
+        inbound: true
+      }
     };
   },
   computed: {
     ...mapGetters({
-      packages: 'getPackages',
-      currentPackageDetails: 'getCurrentPackageDetails'
-    }),
+      packages: "getPackages",
+      currentPackageDetails: "getCurrentPackageDetails"
+    })
   },
   methods: {
     ...mapActions({
-      addItem: 'addPackage',
-      deleteItem: 'deletePackage',
-      getTrackingDetails: 'getTrackingDetail'      
+      addItem: "addPackage",
+      deleteItem: "deletePackage",
+      getTrackingDetails: "getTrackingDetail"
     }),
     addPackage() {
       this.addItem(this.addPackageData);
@@ -91,9 +91,8 @@ export default {
   },
   created() {
     this.$store.dispatch("retrievePackages");
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

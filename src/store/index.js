@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import packagemanager from './modules/packagemanager'
-import authentication from './modules/authentication'
-import tracking from './modules/tracking'
+import packagemanager from "./modules/packagemanager";
+import authentication from "./modules/authentication";
+import tracking from "./modules/tracking";
 
 Vue.use(Vuex);
 
